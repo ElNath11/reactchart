@@ -1,0 +1,30 @@
+.bg-grey { background: #e0e1e2 none !important; }
+.bg-brown { background: #e67e22 none !important; }
+
+.ui.table tfoot th .bg-brown {
+	background: #e67e22 none !important;
+}
+
+.bg-none { background: none !important; }
+.border-none { border: none; }
+.border-s { border: 1px solid rgba(34,36,38,.15) }
+.border-bottom { border-bottom: 1px solid rgba(34,36,38,.15) }
+.border-right { border-right: 1px solid rgba(34,36,38,.15) }
+
+.pretty-box { box-shadow: 0 1px 2px 0 rgba(34,36,38,.15); border-radius: 3px; }
+
+.f9 { font-size: 9px; }
+.f10 { font-size: 10px; }
+.f12 { font-size: 12px; }
+.f14 { font-size: 14px; }
+.f16 { font-size: 16px; }
+.f18 { font-size: 18px; }
+.f24 { font-size: 24px; }
+.f26 { font-size: 26px; }
+.f28 { font-size: 28px; }
+
+.text-blue {  color: #3498db; }
+.text-green {  color: #2ecc71; }
+.text-black {  color: #666666; }
+.text-red { color: #e74c3c; }
+.text-brown { color: #e67e22 !important; }
