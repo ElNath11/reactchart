@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import ApexChart from "react-apexcharts";
 
 class OptionFull extends React.Component {

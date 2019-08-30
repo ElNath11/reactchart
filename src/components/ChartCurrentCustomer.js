@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import ApexChart from "react-apexcharts";
 
 class ChartCurrentCustomer extends React.Component {
@@ -61,7 +61,6 @@ class ChartCurrentCustomer extends React.Component {
           }
         },
         legend: {
-          offsetY: 0,
           position: 'right',
                 offsetY: 0,
                 height: 150,                

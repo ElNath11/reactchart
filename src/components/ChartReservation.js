@@ -37,8 +37,8 @@ constructor(props) {
               floating: true,
               fontSize: '10px',
               position: 'left',
-              offsetX: -8,
-              offsetY: -5,
+              offsetX: -10,
+              offsetY: -28,
               labels: {
                   useSeriesColors: true,
               },

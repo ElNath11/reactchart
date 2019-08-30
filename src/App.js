@@ -2,8 +2,6 @@ import React, {Component, Fragment} from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import ChartFront from './components/ChartFront'
-import ChartFrontDesk from './components/ChartFrontDesk'
-import ChartCancelation from './components/ChartCancelation'
 import ex from './components/ex'
 import ChartCampaign from './components/ChartCampaign'
 

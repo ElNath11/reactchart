@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col } from 'reactstrap';
+import {  Row, Col } from 'reactstrap';
 import Chart from 'react-apexcharts';
 
 
@@ -117,7 +117,7 @@ class ChartRepeatOrder extends Component{
                     </div>
                     <div className="col px-0">
                       <ul className="list-unstyled mb-0 ">
-                        <li className="f24 text-green py-2">8\10</li>
+                        <li className="f24 text-green py-2">8/10</li>
                       </ul>
                     </div>
                   </div>

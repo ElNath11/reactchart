@@ -5,7 +5,7 @@ import ChartReservation from './ChartReservation';
 import OptionFull from './OptionFull';
 import ChartCurrentCustomer from './ChartCurrentCustomer';
 import ChartRepeatOrder from './ChartRepeatOrder';
-import ChartRoomMissused from './ChartRoomMissused';ChartCampaign
+import ChartRoomMissused from './ChartRoomMissused';
 import ChartCampaign from './ChartCampaign';
 
 class Dashboard extends Component{
