@@ -5,7 +5,7 @@ import ChartFront from './components/ChartFront'
 import ChartFrontDesk from './components/ChartFrontDesk'
 import ChartCancelation from './components/ChartCancelation'
 import ex from './components/ex'
-import ChartRoomMissused from './components/ChartRoomMissused'
+import ChartCampaign from './components/ChartCampaign'
 
 
 import Dashboard from './components/Dashboard';
@@ -24,7 +24,7 @@ render() {
           <Switch>
             <Route path="/" exact component={ChartFront} />
             <Route path="/dashboard" exact component={Dashboard} />
-            <Route path="/try" exact component={ChartRoomMissused} />
+            <Route path="/try" exact component={ChartCampaign} />
             <Route path="/ex" exact component={ex} />
           </Switch>
         </Fragment>

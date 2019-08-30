@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 import Chart from 'react-apexcharts';
 
 
@@ -79,7 +79,7 @@ class ChartRoomMissused extends Component{
 	render(){
 		return(
 			<React.Fragment>
-						<Row className="text-center ui segment">
+						<Row className="text-center">
 							<Col xs="12" className="text-center">
 								<Chart options={this.state.optionsRadial} series={this.state.seriesRadial} type="radialBar" width="100%"/>
 							</Col>              

@@ -5,7 +5,8 @@ import ChartReservation from './ChartReservation';
 import OptionFull from './OptionFull';
 import ChartCurrentCustomer from './ChartCurrentCustomer';
 import ChartRepeatOrder from './ChartRepeatOrder';
-
+import ChartRoomMissused from './ChartRoomMissused';ChartCampaign
+import ChartCampaign from './ChartCampaign';
 
 class Dashboard extends Component{
 	render(){
@@ -240,7 +241,7 @@ class Dashboard extends Component{
 								<div className="col-12 pretty-box bg-white">										
 										<Row className="pt-3">
 											<Col className="">
-												<ChartCurrentCustomer />
+												<ChartCampaign />
 											</Col>
 										</Row>
 									</div>
@@ -256,7 +257,7 @@ class Dashboard extends Component{
 										</Row>
 										<Row className="pt-3">
 											<Col className="">
-												
+												<ChartRoomMissused />
 											</Col>
 										</Row>
 									</div>
