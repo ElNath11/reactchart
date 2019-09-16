@@ -3,13 +3,13 @@ import { Row, Col } from 'reactstrap';
 import Chart from 'react-apexcharts';
 
 
-class ChartCampaign extends Component{
+class ChartCampaignAndSales extends Component{
 	constructor(props) {
         super(props);
 
         this.state = {
           options: {
-            colors: ['#3A5794', '#A5C351', '#E14A84'],
+            colors: ['#A3A0FB', '#A4DC72', '#E67E22'],
             chart: {
               stacked: false,
             },
@@ -64,15 +64,15 @@ class ChartCampaign extends Component{
           
 
           series: [{
-            name: 'Revenue (per Room Type)',
+            name: 'Active Sales',
             type: 'column',
             data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30]
           }, {
-            name: 'Occupancy Rate',
+            name: 'Number of Cmapaign',
             type: 'area',
             data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43]
           }, {
-            name: 'Average Daily Rate',
+            name: 'Number of Reservation Booked',
             type: 'line',
             data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39]
           }],
@@ -93,4 +93,4 @@ class ChartCampaign extends Component{
 	}
 }
 
-export default ChartCampaign;
+export default ChartCampaignAndSales;

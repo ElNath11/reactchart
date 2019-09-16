@@ -16,7 +16,7 @@ class ChartFrontDesk extends Component{
             endAngle: 225,
             hollow: {
               margin: 0,
-              size: '70%',
+              size: '40%',
               background: '#fff',
               image: undefined,
               imageOffsetX: 0,
@@ -32,7 +32,7 @@ class ChartFrontDesk extends Component{
             },
             track: {
               background: '#fff',
-              strokeWidth: '67%',
+              strokeWidth: '85%',
               margin: 0, // margin is in pixels
               dropShadow: {
                 enabled: true,
