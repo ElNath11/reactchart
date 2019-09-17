@@ -52,7 +52,7 @@ class ChartPowerConsumption extends Component{
                 },
                 offsetY: 2,
                 color: '#666666',
-                fontSize: '14px',
+                fontSize: '18px',
                 show: true,
 
               }
@@ -79,7 +79,7 @@ class ChartPowerConsumption extends Component{
 			<React.Fragment>
 						<Row className="text-center">
 							<Col xs="12" className="text-center">
-								<Chart options={this.state.optionsRadial} series={this.state.seriesRadial} type="radialBar" width="100%" height="276px"/>
+								<Chart options={this.state.optionsRadial} series={this.state.seriesRadial} type="radialBar" width="100%" height="229px"/>
 							</Col>              
 						</Row>            
 			</React.Fragment>

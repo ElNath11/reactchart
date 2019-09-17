@@ -414,7 +414,7 @@ constructor(props) {
 								<div className="theBox">
 								<div className="theBox-head">
 									<Row className="p-2">
-										<Col xs="12" sm="6" className="text-left">Customer Survey</Col>
+										<Col xs="12" sm="6" className="text-left">Guest Feedback</Col>
 										<Col xs="12" sm="6" className="text-detail">Details ></Col>
 									</Row>
 								</div>
@@ -437,7 +437,7 @@ constructor(props) {
 													<td className="border-right">
 														<ul className="list-unstyled">
 															<li className="text-number f14">375</li>
-															<li className="text-detail-value f12">Checked-Out</li>
+															<li className="text-detail-value f12">Forms Sent</li>
 														</ul>
 													</td>
 													<td className="border-right">
@@ -490,7 +490,7 @@ constructor(props) {
 					<div className="container-background py-3 px-3 my-2">
 						<Row>
 							<Col className="section-title ">
-								Other Sections
+								Advance Report
 							</Col>
 							<Col className="text-right">
 								<Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
@@ -510,7 +510,7 @@ constructor(props) {
 								<div className="theBox">
 								<div className="theBox-head">
 									<Row className="p-2">
-										<Col xs="12" sm="6" className="text-left">Campaign and Sales</Col>
+										<Col xs="12" sm="6" className="text-left">Sales Perfomance</Col>
 										<Col xs="12" sm="6" className="text-detail">Details ></Col>
 									</Row>
 								</div>
@@ -523,15 +523,13 @@ constructor(props) {
 								<div className="theBox">
 								<div className="theBox-head">
 									<Row className="p-2">
-										<Col xs="12" sm="6" className="text-left">Room Missued</Col>
+										<Col xs="12" sm="6" className="text-left">Room Tracking</Col>
 										<Col xs="12" sm="6" className="text-detail">Details ></Col>
 									</Row>
 								</div>
 								<Row className="p-2 text-center">
 									<Col xs="12" sm="6">
-										<Row className="text-center">
-											<p className="text-detail-value mb-0 pt-4">Unfair Power Comsumption</p>
-										</Row>
+										<p className="text-detail-value mb-0 pt-4">Unfair Power Comsumption</p>
 										<ChartPowerConsumption />
 										<Row>
 											<Col>
@@ -549,9 +547,7 @@ constructor(props) {
 										</Row>
 									</Col>
 									<Col xs="12" sm="6">
-										<Row>
-											<p className="text-detail-value mb-0 pt-4">Security Alarm</p>
-										</Row>
+										<p className="text-detail-value mb-0 pt-4">Security Alarm</p>
 										<ChartSecurityAlarm />
 										<Row>
 											<Col>
