@@ -74,7 +74,7 @@ constructor(props) {
 								<div className="theBox">
 								<div className="theBox-head">
 									<Row className="p-2">
-										<Col xs="12" sm="6" className="text-left">Room Statistic Overview</Col>
+										<Col xs="12" sm="6" className="text-left">Room Performance</Col>
 										<Col xs="12" sm="6" className="text-detail">Details ></Col>
 									</Row>
 								</div>
@@ -89,7 +89,7 @@ constructor(props) {
 								<div className="theBox">
 								<div className="theBox-head">
 									<Row className="p-2">
-										<Col xs="12" sm="6" className="text-left">Revenue</Col>
+										<Col xs="12" sm="6" className="text-left">Hotel Performance</Col>
 										<Col xs="12" sm="6" className="text-detail">Details ></Col>
 									</Row>
 								</div>
@@ -243,9 +243,14 @@ constructor(props) {
 							      <td>201</td>
 							      <td>900 <span className="f10">SAR</span></td>
 							    </tr>
-							    <tr>
+							    <tr  className="text-blue">
 							      <td>309</td>
-							      <td>500 <span className="f10">SAR</span></td>
+							      <td>
+								      <ul className="list-inline mb-0">
+								      	<li className="list-inline-item mr-0">500 <span className="f10">SAR</span></li>
+								      	<li className="list-inline-item"><span className="right"><IconAvailable /></span></li>
+								      </ul>
+							      </td>
 							    </tr>
 							    <tr>
 							      <td>483</td>
@@ -284,7 +289,7 @@ constructor(props) {
 										      <td>201</td>
 										      <td>900 <span className="f10">SAR</span></td>
 										    </tr>
-										    <tr>
+										    <tr className="text-blue">
 										      <td>309</td>
 										      <td>500 <span className="f10">SAR</span></td>
 										    </tr>
