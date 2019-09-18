@@ -28,6 +28,7 @@ import IconConfirmed from './icons/IconConfirmed'
 import IconUnconfirmed from './icons/IconUnconfirmed'
 import IconNoShow from './icons/IconNoShow'
 import IconCancel from './icons/IconCancel'
+import IconTracker from './icons/IconTracker'
 
 
 class FrontDash extends Component {
@@ -248,7 +249,7 @@ constructor(props) {
 							      <td>
 								      <ul className="list-inline mb-0">
 								      	<li className="list-inline-item mr-0">500 <span className="f10">SAR</span></li>
-								      	<li className="list-inline-item"><span className="right"><IconAvailable /></span></li>
+								      	<li className="list-inline-item float-right"><span><IconTracker /></span></li>
 								      </ul>
 							      </td>
 							    </tr>
