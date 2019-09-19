@@ -85,7 +85,7 @@ class AverageDailyRate extends Component{
 			<React.Fragment>
 						<Row className="text-center">
 							<Col xs="12" className="text-center">
-								<Chart options={this.state.options} series={this.state.series} type="line" height="300" />
+								<Chart options={this.state.options} series={this.state.series} type="line" height="330" />
 							</Col>              
             </Row>
 			</React.Fragment>

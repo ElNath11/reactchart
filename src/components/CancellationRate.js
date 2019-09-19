@@ -20,14 +20,7 @@ class CancellationRate extends Component{
               image: undefined,
               imageOffsetX: 0,
               imageOffsetY: 0,
-              position: 'front',
-              dropShadow: {
-                enabled: true,
-                top: 3,
-                left: 0,
-                blur: 4,
-                opacity: 0.24
-              }
+              position: 'front',             
             },
             track: {
               background: '#fff',
@@ -35,10 +28,9 @@ class CancellationRate extends Component{
               margin: 0, // margin is in pixels
               dropShadow: {
                 enabled: true,
-                top: -3,
+                top: 0,
                 left: 0,
-                blur: 4,
-                opacity: 0.35
+                blur: 0
               }
             },
 

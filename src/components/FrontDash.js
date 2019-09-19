@@ -95,7 +95,9 @@ constructor(props) {
 									</Row>
 								</div>
 								<Row className="p-2 text-center">
-									<Col xs="12" sm="4"><OccupancyRate /></Col>
+									<Col xs="12" sm="4">
+										<OccupancyRate />
+									</Col>
 									<Col xs="12" sm="4"><AverageDailyRateCircular /></Col>
 									<Col xs="12" sm="4"><TotalRevenue /></Col>
 								</Row>
@@ -292,7 +294,12 @@ constructor(props) {
 										    </tr>
 										    <tr className="text-blue">
 										      <td>309</td>
-										      <td>500 <span className="f10">SAR</span></td>
+										      <td>
+											      <ul className="list-inline mb-0">
+											      	<li className="list-inline-item mr-0">500 <span className="f10">SAR</span></li>
+											      	<li className="list-inline-item float-right"><span><IconTracker /></span></li>
+											      </ul>
+										      </td>
 										    </tr>
 										    <tr>
 										      <td>483</td>

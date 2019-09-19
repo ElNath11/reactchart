@@ -23,10 +23,9 @@ class AverageDailyRateCircular extends Component{
               position: 'front',
               dropShadow: {
                 enabled: true,
-                top: 3,
+                top: 0,
                 left: 0,
-                blur: 4,
-                opacity: 0.24
+                blur: 0
               }
             },
             track: {
@@ -35,10 +34,9 @@ class AverageDailyRateCircular extends Component{
               margin: 0, // margin is in pixels
               dropShadow: {
                 enabled: true,
-                top: -3,
+                top: 0,
                 left: 0,
-                blur: 4,
-                opacity: 0.35
+                blur: 0
               }
             },
 
@@ -79,6 +77,7 @@ class AverageDailyRateCircular extends Component{
 			<React.Fragment>
 						<Row className="text-center">
 							<Col xs="12" className="text-center">
+              <h2 className="text-detail-value f14 purple-circle mb-0 pt-3">Average Daily Rate</h2>
 								<Chart options={this.state.optionsRadial} series={this.state.seriesRadial} type="radialBar" width="100%" height="272px"/>
 							</Col>              
 						</Row>            

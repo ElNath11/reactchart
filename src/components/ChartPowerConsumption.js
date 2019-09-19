@@ -23,10 +23,9 @@ class ChartPowerConsumption extends Component{
               position: 'front',
               dropShadow: {
                 enabled: true,
-                top: 3,
+                top: 0,
                 left: 0,
-                blur: 4,
-                opacity: 0.24
+                blur: 0
               }
             },
             track: {
@@ -35,10 +34,9 @@ class ChartPowerConsumption extends Component{
               margin: 0, // margin is in pixels
               dropShadow: {
                 enabled: true,
-                top: -3,
+                top: 0,
                 left: 0,
-                blur: 4,
-                opacity: 0.35
+                blur: 0
               }
             },
 
