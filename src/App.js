@@ -25,7 +25,7 @@ render() {
             <Route path="/" exact component={ChartFront} />
             <Route path="/dashboard" exact component={Dashboard} />
             <Route path="/try" exact component={ChartCancellationReason} />
-            <Route path="/ex" exact component={ChartCampaign} />
+            <Route path="/ex" exact component={ex} />
             <Route path="/front" exact component={FrontDash} />
           </Switch>
         </Fragment>
