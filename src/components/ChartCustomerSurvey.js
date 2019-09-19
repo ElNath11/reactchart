@@ -97,11 +97,11 @@ class ChartCustomerSurvey extends React.Component {
   render() {
     return (
       <React.Fragment>
-            <Row className="">
-              <Col xs="12" className="">
+            <Row className="pb-1">
+              <Col xs="12" className="mb-1">
                 <Chart options={this.state.options}
                       series={this.state.series}
-                      type="donut" width="100%" height="240px"/>
+                      type="donut" width="100%" height="245px"/>
               </Col>              
             </Row>            
       </React.Fragment>

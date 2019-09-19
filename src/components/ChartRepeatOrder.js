@@ -84,7 +84,7 @@ class ChartRepeatOrder extends Component{
 			<React.Fragment>
 						<Row className="text-center ui segment">
 							<Col xs="12" sm="6" className="text-center">
-								<Chart options={this.state.optionsRadial} series={this.state.seriesRadial} type="radialBar" width="100%"/>
+								<Chart options={this.state.optionsRadial} series={this.state.seriesRadial} type="radialBar" width="100%" height="245px" />
 							</Col>
               <Col xs="12" sm="6" className="text-left">
                   <ul className="list-unstyled pb-3 pt-4">
