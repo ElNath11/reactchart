@@ -11,7 +11,7 @@ class ChartGuestSegment extends React.Component {
         series: [5000, 1500, 4000, 2000, 1200, 2300],
       });
 
-      console.log(this.state.series, "Before update");
+      /*console.log(this.state.series, "Before update");*/
     };
     this.update = appendToState => {
       setTimeout(function() {
@@ -86,7 +86,7 @@ class ChartGuestSegment extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.state.series, "Before update");
+    /*console.log(this.state.series, "Before update");*/
     this.update(this.appendToState);
   }
 

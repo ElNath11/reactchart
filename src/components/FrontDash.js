@@ -27,15 +27,12 @@ import IconNoShow from './icons/IconNoShow'
 import IconCancel from './icons/IconCancel'
 import IconTracker from './icons/IconTracker'
 
-import DashData from './json/frontdesk'
-
 
 class FrontDash extends Component {
 constructor(props) {
     super(props);
 
-   this.state = {
-   	seriesOccupancy: [25],
+   this.state = {   	
    	itemsPerformance: [],
    	hotel_performance_sumary: [],
    	room_performance_sumary: [],
@@ -43,47 +40,45 @@ constructor(props) {
    	occupancy_rate: 0,
    	average_daily_rate: 0,
    	total_daily_rate: 0,
-   	total_revenue: 0   	
+   	total_revenue: 0,
+   	filterFront: 'day'
    }
    
   }
 
   componentDidMount() {
-       fetch("http://feeback.dev.ms.taskyinn.com/dashboard/frontdesk/10/day")
-        .then(res => res.json())
-        .then(parsedJSON => {
-        	this.setState({
-        		hotel_performance_sumary: parsedJSON.data.hotel_performance_sumary.result,
-        		room_performance_sumary: parsedJSON.data.room_performance_sumary.result,
-        	})
+       // fetch("http://feeback.dev.ms.taskyinn.com/dashboard/frontdesk/10/day")
+       //  .then(res => res.json())
+       //  .then(parsedJSON => {
+       //  	this.setState({
+       //  		hotel_performance_sumary: parsedJSON.data.hotel_performance_sumary.result,
+       //  		room_performance_sumary: parsedJSON.data.room_performance_sumary.result,
+       //  	})
         	
-        })
-        .then(itemsPerformance => this.setState({
-          itemsPerformance,
-          isLoaded: false
-        }))
-        .catch(error => console.log('parsing failed', error))
-        this.fetchHotelPerformance();
+       //  })
+       //  .then(itemsPerformance => this.setState({
+       //    itemsPerformance,
+       //    isLoaded: false
+       //  }))
+       //  .catch(error => console.log('parsing failed', error))
+       	
+
+        this.fetchHotelPerformance(this.state.filterFront);
         this.fetchRoomPerformance();
         
     }
 
-    fetchHotelPerformance(){
-         fetch("http://feeback.dev.ms.taskyinn.com/dashboard/frontdesk/10/day")
+    fetchHotelPerformance(filter){
+    	//filterFront = this.state.filterFront;//
+    	console.log('bimo', filter);
+    	fetch(`http://feeback.dev.ms.taskyinn.com/dashboard/frontdesk/10/${filter}`)
+
         .then(res => res.json())
-        .then(parsedJSON => parsedJSON.data.hotel_performance_sumary.result.map(data => (
-          {
-            total_room: `${data.total_room}`,
-            occupancy_rate: `${data.occupancy_rate}`,
-            average_daily_rate: `${data.average_daily_rate}`,
-            total_daily_rate: `${data.total_daily_rate}`,
-            total_revenue: `${data.total_revenue}`,
-          }
-        )))
-        .then(hotel_performance_sumary => this.setState({
-          hotel_performance_sumary,
+        
+        .then(response => { console.log('ini ',  response); this.setState({
+          hotel_performance_sumary: response.data.hotel_performance_sumary,
           isLoaded: false
-        }))
+        })})
         .catch(error => console.log('parsing failed', error))
     }
 
@@ -105,14 +100,19 @@ constructor(props) {
         }))
         .catch(error => console.log('parsing failed', error))
     }
+    
+     OnClickFilterFront = (value, filterFront) => {
+    	this.setState({ filterFront: value });
+    	this.fetchHotelPerformance(value);
+    	
+  	};
 
  handleChangeDesk = (e) => {
     console.log('Selected value:', e.target.value);
-    
     this.setState({
-      seriesOccupancy: [80]      
+      filterFront: e.target.value,
     })
-    console.log(this.state.seriesOccupancy);
+    console.log('new filter ',this.state.filterFront);
   }
 
 
@@ -123,7 +123,7 @@ constructor(props) {
 		console.log('hotel', hotel_performance_sumary);
 		console.log('STATE', this.state);
 		return(
-			<div className="bg-grey pb-2 px-3 pt-3">
+			<div className="pb-2 px-3 pt-3">
 				<div className="dash-title">Dashboard</div>
 
 					<div className="container-background py-3 px-3 my-2">
@@ -132,12 +132,11 @@ constructor(props) {
 								Front Desk
 							</Col>
 							<Col className="text-right">				                  
-				                <select className="dropdown" id="desk" onChange={this.handleChangeDesk}>
+				                	<select className="dropdown" id="desk" onChange={(e) => this.OnClickFilterFront(e.target.value, "filterFront")}>
 				                        <option value="" defaultValue>Select Filter</option>
-				                        <option value="today">Today</option>
-				                        <option value="weekly">Weekly</option>
-				                        <option value="monthly">Monthly</option>
-				                        <option value="years">Years</option>
+				                        <option value="day">Today</option>
+				                        <option value="month">Month</option>
+				                        <option value="year">Years</option>
 				                    </select>
 							</Col>
 						</Row>
@@ -156,17 +155,12 @@ constructor(props) {
 								<Row className="p-2">
 									<Col xs="12">
 										<AverageDailyRate />
-
 									</Col>									
 								</Row>
 								</div>
 							</Col>
 							
-							<Col xs="12" sm="6">
-							{
-					              hotel_performance_sumary.length > 0 ? hotel_performance_sumary.map(hotel_performance => {
-					              const {total_room, occupancy_rate, average_daily_rate, total_daily_rate, total_revenue} = hotel_performance;
-					               return (
+							<Col xs="12" sm="6">										
 								<div className="theBox">
 								<div className="theBox-head">
 									<Row className="p-2">
@@ -177,7 +171,9 @@ constructor(props) {
 													
 								<Row className="p-2 text-center">
 									<Col xs="12" sm="4">
-									<OccupancyRate dataOccupancy={[occupancy_rate]} />
+									
+									
+									<OccupancyRate dataOccupancy={[hotel_performance_sumary.occupancy_rate]} />
 									</Col>
 									<Col xs="12" sm="4"><AverageDailyRateCircular dataAverage={[50]} /></Col>
 									<Col xs="12" sm="4"><TotalRevenue /></Col>
@@ -185,28 +181,25 @@ constructor(props) {
 								<Row className="p-2 text-center">
 									<Col xs="12" sm="4">
 										<ul className="list-unstyled">
-											<li className="text-number">{total_room}</li>
+											<li className="text-number">{hotel_performance_sumary.total_room}</li>
 											<li className="text-detail-value">Rooms</li>
 										</ul>
 									</Col>
 									<Col xs="12" sm="4">
 										<ul className="list-unstyled">
-											<li className="text-number">{occupancy_rate}</li>
+											<li className="text-number">{hotel_performance_sumary.total_daily_rate}</li>
 											<li className="text-detail-value">In SAR</li>
 										</ul>
 									</Col>
 									<Col xs="12" sm="4">
 										<ul className="list-unstyled">
-											<li className="text-number">15,970</li>
+											<li className="text-number">{hotel_performance_sumary.total_revenue}</li>
 											<li className="text-detail-value">In SAR</li>
 										</ul>
 									</Col>
 								</Row>
 														
-								</div>
-								);
-					            }) : null
-					          }			
+								</div>												
 							</Col>
 
 						</Row>

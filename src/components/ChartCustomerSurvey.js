@@ -11,7 +11,7 @@ class ChartCustomerSurvey extends React.Component {
         series: [75, 25],
       });
 
-      console.log(this.state.series, "Before update");
+      /*console.log(this.state.series, "Before update");*/
     };
     this.update = appendToState => {
       setTimeout(function() {
@@ -90,7 +90,7 @@ class ChartCustomerSurvey extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.state.series, "Before update");
+    /*console.log(this.state.series, "Before update");*/
     this.update(this.appendToState);
   }
 
