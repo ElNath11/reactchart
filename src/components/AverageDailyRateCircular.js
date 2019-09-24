@@ -78,7 +78,7 @@ class AverageDailyRateCircular extends Component{
 						<Row className="text-center">
 							<Col xs="12" className="text-center">
               <h2 className="text-detail-value f14 purple-circle mb-0 pt-3">Average Daily Rate</h2>
-								<Chart options={this.state.optionsRadial} series={this.state.seriesRadial} type="radialBar" width="100%" height="272px"/>
+								<Chart options={this.state.optionsRadial} series={this.props.dataAverage} type="radialBar" width="100%" height="272px"/>
 							</Col>              
 						</Row>            
 			</React.Fragment>

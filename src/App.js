@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import ChartFront from './components/ChartFront'
 import ex from './components/ex'
-import ChartCampaign from './components/ChartCampaign'
 import ChartCancellationReason from './components/ChartCancellationReason'
 
 

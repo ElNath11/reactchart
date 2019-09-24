@@ -60,7 +60,7 @@ class OptionFull extends React.Component {
           }
         },
         legend: {
-          offsetY: -25,
+          
           position: 'right',
                 offsetY: 0,
                 height: 230,

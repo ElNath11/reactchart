@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
-import Chart from 'react-apexcharts';
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-
 
 //Chart 
 import AverageDailyRate from './AverageDailyRate'
@@ -30,24 +27,101 @@ import IconNoShow from './icons/IconNoShow'
 import IconCancel from './icons/IconCancel'
 import IconTracker from './icons/IconTracker'
 
+import DashData from './json/frontdesk'
+
 
 class FrontDash extends Component {
 constructor(props) {
     super(props);
 
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      dropdownOpen: false
-    };
+   this.state = {
+   	seriesOccupancy: [25],
+   	itemsPerformance: [],
+   	hotel_performance_sumary: [],
+   	room_performance_sumary: [],
+   	total_room: 0,
+   	occupancy_rate: 0,
+   	average_daily_rate: 0,
+   	total_daily_rate: 0,
+   	total_revenue: 0   	
+   }
+   
   }
 
-  toggle() {
-    this.setState(prevState => ({
-      dropdownOpen: !prevState.dropdownOpen
-    }));
+  componentDidMount() {
+       fetch("http://feeback.dev.ms.taskyinn.com/dashboard/frontdesk/10/day")
+        .then(res => res.json())
+        .then(parsedJSON => {
+        	this.setState({
+        		hotel_performance_sumary: parsedJSON.data.hotel_performance_sumary.result,
+        		room_performance_sumary: parsedJSON.data.room_performance_sumary.result,
+        	})
+        	
+        })
+        .then(itemsPerformance => this.setState({
+          itemsPerformance,
+          isLoaded: false
+        }))
+        .catch(error => console.log('parsing failed', error))
+        this.fetchHotelPerformance();
+        this.fetchRoomPerformance();
+        
+    }
+
+    fetchHotelPerformance(){
+         fetch("http://feeback.dev.ms.taskyinn.com/dashboard/frontdesk/10/day")
+        .then(res => res.json())
+        .then(parsedJSON => parsedJSON.data.hotel_performance_sumary.result.map(data => (
+          {
+            total_room: `${data.total_room}`,
+            occupancy_rate: `${data.occupancy_rate}`,
+            average_daily_rate: `${data.average_daily_rate}`,
+            total_daily_rate: `${data.total_daily_rate}`,
+            total_revenue: `${data.total_revenue}`,
+          }
+        )))
+        .then(hotel_performance_sumary => this.setState({
+          hotel_performance_sumary,
+          isLoaded: false
+        }))
+        .catch(error => console.log('parsing failed', error))
+    }
+
+    fetchRoomPerformance(){
+         fetch("http://feeback.dev.ms.taskyinn.com/dashboard/frontdesk/10/day")
+        .then(res => res.json())
+        .then(parsedJSON => parsedJSON.data.room_performance_sumary.result.map(data => (
+          {
+            name: `${data.name}`,
+            room_count: `${data.room_count}`,
+            occupancy_count: `${data.occupancy_count}`,
+            total_rev: `${data.total_rev}`,
+            average_daily_rate: `${data.average_daily_rate}`,
+          }
+        )))
+        .then(room_performance_sumary => this.setState({
+          room_performance_sumary,
+          isLoaded: false
+        }))
+        .catch(error => console.log('parsing failed', error))
+    }
+
+ handleChangeDesk = (e) => {
+    console.log('Selected value:', e.target.value);
+    
+    this.setState({
+      seriesOccupancy: [80]      
+    })
+    console.log(this.state.seriesOccupancy);
   }
+
+
 
 	render(){
+		const {room_performance_sumary, hotel_performance_sumary } = this.state;
+		console.log('room', room_performance_sumary);
+		console.log('hotel', hotel_performance_sumary);
+		console.log('STATE', this.state);
 		return(
 			<div className="bg-grey pb-2 px-3 pt-3">
 				<div className="dash-title">Dashboard</div>
@@ -57,19 +131,18 @@ constructor(props) {
 							<Col className="section-title ">
 								Front Desk
 							</Col>
-							<Col className="text-right">
-								<Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-							        <DropdownToggle caret>
-							          Today
-							        </DropdownToggle>
-							        <DropdownMenu>
-							          <DropdownItem header>Header</DropdownItem>
-							          <DropdownItem>Months</DropdownItem>
-							        </DropdownMenu>  
-							      </Dropdown>
+							<Col className="text-right">				                  
+				                <select className="dropdown" id="desk" onChange={this.handleChangeDesk}>
+				                        <option value="" defaultValue>Select Filter</option>
+				                        <option value="today">Today</option>
+				                        <option value="weekly">Weekly</option>
+				                        <option value="monthly">Monthly</option>
+				                        <option value="years">Years</option>
+				                    </select>
 							</Col>
 						</Row>
 					{/* Row 1 */}
+					
 						<Row className="py-2">
 							<Col xs="12" sm="6"> 
 								<div className="theBox">
@@ -79,14 +152,21 @@ constructor(props) {
 										<Col xs="12" sm="6" className="text-detail">Details ></Col>
 									</Row>
 								</div>
+								 
 								<Row className="p-2">
 									<Col xs="12">
 										<AverageDailyRate />
+
 									</Col>									
 								</Row>
 								</div>
 							</Col>
-							<Col xs="12" sm="6"> 
+							
+							<Col xs="12" sm="6">
+							{
+					              hotel_performance_sumary.length > 0 ? hotel_performance_sumary.map(hotel_performance => {
+					              const {total_room, occupancy_rate, average_daily_rate, total_daily_rate, total_revenue} = hotel_performance;
+					               return (
 								<div className="theBox">
 								<div className="theBox-head">
 									<Row className="p-2">
@@ -94,23 +174,24 @@ constructor(props) {
 										<Col xs="12" sm="6" className="text-detail">Details ></Col>
 									</Row>
 								</div>
+													
 								<Row className="p-2 text-center">
 									<Col xs="12" sm="4">
-										<OccupancyRate />
+									<OccupancyRate dataOccupancy={[occupancy_rate]} />
 									</Col>
-									<Col xs="12" sm="4"><AverageDailyRateCircular /></Col>
+									<Col xs="12" sm="4"><AverageDailyRateCircular dataAverage={[50]} /></Col>
 									<Col xs="12" sm="4"><TotalRevenue /></Col>
 								</Row>
 								<Row className="p-2 text-center">
 									<Col xs="12" sm="4">
 										<ul className="list-unstyled">
-											<li className="text-number">135</li>
+											<li className="text-number">{total_room}</li>
 											<li className="text-detail-value">Rooms</li>
 										</ul>
 									</Col>
 									<Col xs="12" sm="4">
 										<ul className="list-unstyled">
-											<li className="text-number">475</li>
+											<li className="text-number">{occupancy_rate}</li>
 											<li className="text-detail-value">In SAR</li>
 										</ul>
 									</Col>
@@ -121,9 +202,15 @@ constructor(props) {
 										</ul>
 									</Col>
 								</Row>
+														
 								</div>
+								);
+					            }) : null
+					          }			
 							</Col>
+
 						</Row>
+						
 					{/* Row 1 */}
 					{/* Row 2 */}
 						<Row className="py-2">
@@ -326,15 +413,12 @@ constructor(props) {
 								Booking Section
 							</Col>
 							<Col className="text-right">
-								<Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-							        <DropdownToggle caret>
-							          Today
-							        </DropdownToggle>
-							        <DropdownMenu>
-							          <DropdownItem header>Header</DropdownItem>
-							          <DropdownItem>Months</DropdownItem>
-							        </DropdownMenu>  
-							      </Dropdown>
+								<select className="dropdown" id="booking">
+				                        <option value="" selected="selected">Select Filter</option>
+				                        <option value="today">Today</option>
+				                        <option value="monthly">Monthly</option>
+				                        <option value="years">Years</option>
+				                    </select>
 							</Col>
 						</Row>
 						{/* Row 1 */}
@@ -385,15 +469,12 @@ constructor(props) {
 								Guest Section
 							</Col>
 							<Col className="text-right">
-								<Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-							        <DropdownToggle caret>
-							          Today
-							        </DropdownToggle>
-							        <DropdownMenu>
-							          <DropdownItem header>Header</DropdownItem>
-							          <DropdownItem>Months</DropdownItem>
-							        </DropdownMenu>  
-							      </Dropdown>
+								<select className="dropdown" id="guest">
+				                        <option value="" selected="selected">Select Filter</option>
+				                        <option value="today">Today</option>
+				                        <option value="monthly">Monthly</option>
+				                        <option value="years">Years</option>
+				                    </select>
 							</Col>
 						</Row>
 						{/* Row 1 */}
@@ -469,6 +550,7 @@ constructor(props) {
 											</tbody>
 										</table>
 										<table className="theBox w90">
+										<tbody>
 											<tr>
 												<td className="border-right">
 													<ul className="list-unstyled">
@@ -489,6 +571,7 @@ constructor(props) {
 														</ul>
 												</td>
 											</tr>
+											</tbody>
 										</table>
 										</div>
 									</Col>
@@ -506,15 +589,12 @@ constructor(props) {
 								Advance Report
 							</Col>
 							<Col className="text-right">
-								<Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-							        <DropdownToggle caret>
-							          Today
-							        </DropdownToggle>
-							        <DropdownMenu>
-							          <DropdownItem header>Header</DropdownItem>
-							          <DropdownItem>Months</DropdownItem>
-							        </DropdownMenu>  
-							      </Dropdown>
+								<select className="dropdown" id="report">
+				                        <option value="" selected="selected">Select Filter</option>
+				                        <option value="today">Today</option>
+				                        <option value="monthly">Monthly</option>
+				                        <option value="years">Years</option>
+				                    </select>
 							</Col>
 						</Row>
 						{/* Row 1 */}
