@@ -1,5 +1,6 @@
 import React from "react";
 import ApexChart from "react-apexcharts";
+import { Row, Col } from 'reactstrap';
 
 class ChartCurrentCustomer extends React.Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class ChartCurrentCustomer extends React.Component {
     };
 
     this.state = {
-      series: [30, 20, 10, 10, 30],
+      series: [0, 20, 0, 0, 0],
 
       options: {
         colors: ['#e74c3c', '#2ecc71', '#3498db', '#9b59b6', '#1abc9c'],
@@ -88,16 +89,20 @@ class ChartCurrentCustomer extends React.Component {
   }
 
   render() {
-    return (
-      <div className="chart">
+    return ( 
+     <React.Fragment>
+            <Row className="text-center">
+              <Col xs="12" className="text-center">
 
-        <ApexChart
+                  <ApexChart
           options={this.state.options}
           series={this.state.series}
           type="donut"
           width="100%"
         />
-      </div>
+              </Col>              
+            </Row>
+      </React.Fragment>
     );
   }
 }

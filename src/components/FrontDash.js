@@ -36,73 +36,97 @@ constructor(props) {
    	itemsPerformance: [],
    	hotel_performance_sumary: [],
    	room_performance_sumary: [],
+   	transaction_sumary: [],
+   	payment_tracker_sumary: [],
+
    	total_room: 0,
    	occupancy_rate: 0,
    	average_daily_rate: 0,
    	total_daily_rate: 0,
    	total_revenue: 0,
-   	filterFront: 'day',
-   	rate: ''
+   	filterFront: 'year',
+   	rate: '',
+   	labels: [],
+   	revenue: [],
+    room_occupancy_rate: [],
+    room_average_daily_rate: [],
+
+   	confirmed: 0,
+   	unconfirmed: 0,
+   	no_show: 0,
+   	cancel: 0,
+   	checked_in: 0,
+
+   	occupied: 0,
+   	available: 0,
+   	dnr: 0,
+   	room_checked_in: 0,
+   	checked_out: 0,
+
+   	room_number: [],
+   	amout_requested: [],
+   	total_balance: 0,
+
+   	pending_folio_sumary: [],
+	reservation_number: [],
+	pending_amout_requested: [],
+	pending_total_balance: 0,
    }
    
   }
 
-  componentDidMount() {
-       // fetch("http://feeback.dev.ms.taskyinn.com/dashboard/frontdesk/10/day")
-       //  .then(res => res.json())
-       //  .then(parsedJSON => {
-       //  	this.setState({
-       //  		hotel_performance_sumary: parsedJSON.data.hotel_performance_sumary.result,
-       //  		room_performance_sumary: parsedJSON.data.room_performance_sumary.result,
-       //  	})
-        	
-       //  })
-       //  .then(itemsPerformance => this.setState({
-       //    itemsPerformance,
-       //    isLoaded: false
-       //  }))
-       //  .catch(error => console.log('parsing failed', error))
-       	
-
+  componentDidMount() {       
         this.fetchHotelPerformance(this.state.filterFront);
-        this.fetchRoomPerformance();
+        /*this.fetchRoomPerformance();*/
         
     }
 
     fetchHotelPerformance(filter){
-    	//filterFront = this.state.filterFront;//
+    	
     	console.log('bimo', filter);
     	fetch(`http://feeback.dev.ms.taskyinn.com/dashboard/frontdesk/10/${filter}`)
 
         .then(res => res.json())
         
-        .then(response => { console.log('ini ',  response); this.setState({
+        .then(response => this.setState({
           hotel_performance_sumary: response.data.hotel_performance_sumary,
           occupancy_rate: response.data.hotel_performance_sumary.occupancy_rate,
           average_daily_rate: response.data.hotel_performance_sumary.average_daily_rate,
-          isLoaded: false
-        })})
-        .catch(error => console.log('parsing failed', error))
-    }
 
-    fetchRoomPerformance(){
-         fetch("http://feeback.dev.ms.taskyinn.com/dashboard/frontdesk/10/day")
-        .then(res => res.json())
-        .then(parsedJSON => parsedJSON.data.room_performance_sumary.result.map(data => (
-          {
-            name: `${data.name}`,
-            room_count: `${data.room_count}`,
-            occupancy_count: `${data.occupancy_count}`,
-            total_rev: `${data.total_rev}`,
-            average_daily_rate: `${data.average_daily_rate}`,
-          }
-        )))
-        .then(room_performance_sumary => this.setState({
-          room_performance_sumary,
+          room_performance_sumary: response.data.room_performance_sumary,
+          labels: response.data.room_performance_sumary.labels,
+          revenue: response.data.room_performance_sumary.revenue,
+          room_occupancy_rate: response.data.room_performance_sumary.occupancy_rate,
+          room_average_daily_rate: response.data.room_performance_sumary.average_daily_rate,
+
+          booking_sumary: response.data.booking_sumary,
+          confirmed: response.data.booking_sumary.confirmed,
+          unconfirmed: response.data.booking_sumary.unconfirmed,
+          no_show: response.data.booking_sumary.no_show,
+          cancel: response.data.booking_sumary.cancel,
+          checked_in: response.data.booking_sumary.checked_in,
+
+          transaction_sumary: response.data.transaction_sumary,
+          occupied: response.data.transaction_sumary.occupied,
+		   	available: response.data.transaction_sumary.available,
+		   	dnr: response.data.transaction_sumary.dnr,
+		   	room_checked_in: response.data.transaction_sumary.room_checked_in,
+		   	checked_out: response.data.transaction_sumary.checked_out,
+
+		  payment_tracker_sumary: response.data.payment_tracker_sumary,
+			room_number: response.data.payment_tracker_sumary.room_number,
+			amout_requested: response.data.payment_tracker_sumary.amout_requested,
+			total_balance: response.data.payment_tracker_sumary.total_balance,
+
+			pending_folio_sumary: response.data.pending_folio_sumary,
+			reservation_number: response.data.pending_folio_sumary.reservation_number,
+			pending_amout_requested: response.data.pending_folio_sumary.amout_requested,
+			pending_total_balance: response.data.pending_folio_sumary.total_balance,
+
           isLoaded: false
-        }))
+        }) )
         .catch(error => console.log('parsing failed', error))
-    }
+    }   
     
      OnClickFilterFront = (value, filterFront) => {
     	this.setState({ filterFront: value });
@@ -121,10 +145,17 @@ constructor(props) {
 
 
 	render(){
-		const {room_performance_sumary, hotel_performance_sumary } = this.state;
-		console.log('room', room_performance_sumary);
-		console.log('rate', hotel_performance_sumary.occupancy_rate);
-		console.log('STATE', this.state);		
+		const {room_performance_sumary, hotel_performance_sumary, booking_sumary, transaction_sumary } = this.state;
+		console.log('room', this.state.confirmed);
+		console.log('DAILY LABEL', this.state.labels[0]);
+		console.log('REVENUE', this.state.revenue);
+		console.log('OCC', this.state.room_occupancy_rate);
+		console.log('AVG', this.state.room_number);
+
+		const labelsData = this.state.labels;
+    	// Converting JS array to JSON string
+    	// const jsonDataLabel = JSON.stringify(labelsData);
+    	// console.log('asa', jsonDataLabel)
 
 		return(
 			<div className="pb-2 px-3 pt-3">
@@ -156,8 +187,11 @@ constructor(props) {
 								</div>
 								 
 								<Row className="p-2">
-									<Col xs="12">
-										<AverageDailyRate />
+									<Col xs="12">									
+										<AverageDailyRate dataLabels={this.state.labels} 
+										seriesRevenue={[0,5,5,5,1,5,0,0,0,0,0,7]} 
+										seriesOccu={[0,3,5,2,1,5,8,0,0,4,0,7]}
+										seriesAverage={[0,5,2,5,1,5,0,0,3,0,9,7]} />
 									</Col>									
 								</Row>
 								</div>
@@ -174,7 +208,7 @@ constructor(props) {
 													
 								<Row className="p-2 text-center">
 									<Col xs="12" sm="4">
-									{}
+									
 									<OccupancyRate dataOccupancy={[this.state.occupancy_rate]} />
 									</Col>
 									<Col xs="12" sm="4"><AverageDailyRateCircular dataAverage={[this.state.average_daily_rate]} /></Col>
@@ -221,34 +255,34 @@ constructor(props) {
 									<Col>
 										<ul className="list-unstyled">
 											<li><IconConfirmed /></li>
-											<li className="text-number py-2">25</li>
+											<li className="text-number py-2">{this.state.confirmed}</li>
 											<li className="text-detail-value">Confirmed</li>
 										</ul>
 									</Col>
 									<Col>
 										<ul className="list-unstyled">
 											<li><IconUnconfirmed /></li>
-											<li className="text-number py-2">5</li>
+											<li className="text-number py-2">{this.state.unconfirmed}</li>
 											<li className="text-detail-value">Unconfirmed</li>
 										</ul>
 									</Col>
 									<Col>
 										<ul className="list-unstyled">
 											<li><IconNoShow /></li>
-											<li className="text-number py-2">5</li>
+											<li className="text-number py-2">{this.state.no_show}</li>
 											<li className="text-detail-value">No Show</li>
 										</ul>
 									</Col>
 									<Col>
 										<ul className="list-unstyled">
 											<li><IconCancel /></li>
-											<li className="text-number py-2">5</li>
+											<li className="text-number py-2">{this.state.cancel}</li>
 											<li className="text-detail-value">Cancel</li>
 										</ul></Col>
 									<Col>
 										<ul className="list-unstyled">
 											<li><IconCheckIn /></li>
-											<li className="text-number py-2">5</li>
+											<li className="text-number py-2">{this.state.checked_in}</li>
 											<li className="text-detail-value">Checked-In</li>
 										</ul>
 									</Col>
@@ -267,35 +301,35 @@ constructor(props) {
 									<Col>
 										<ul className="list-unstyled">
 											<li><IconOccupied /></li>
-											<li className="text-number py-2">25</li>
+											<li className="text-number py-2">{this.state.occupied}</li>
 											<li className="text-detail-value">Occupied</li>
 										</ul>
 									</Col>
 									<Col>
 										<ul className="list-unstyled">
 											<li><IconAvailable /></li>
-											<li className="text-number py-2">50</li>
+											<li className="text-number py-2">{this.state.available}</li>
 											<li className="text-detail-value">Available</li>
 										</ul>
 									</Col>
 									<Col>
 										<ul className="list-unstyled">
 											<li><IconDNR /></li>
-											<li className="text-number py-2">11</li>
+											<li className="text-number py-2">{this.state.dnr}</li>
 											<li className="text-detail-value">DNR</li>
 										</ul>
 									</Col>
 									<Col>
 										<ul className="list-unstyled">
 											<li><IconCheckIn /></li>
-											<li className="text-number py-2">7</li>
+											<li className="text-number py-2">{this.state.checked_in}</li>
 											<li className="text-detail-value">Checked-In</li>
 										</ul>
 									</Col>
 									<Col>
 										<ul className="list-unstyled">
 											<li><IconCheckOut /></li>
-											<li className="text-number py-2">3</li>
+											<li className="text-number py-2">{this.state.checked_out}</li>
 											<li className="text-detail-value">Checked-Out</li>
 										</ul>
 									</Col>
@@ -324,28 +358,18 @@ constructor(props) {
 							    </tr>
 							  </thead>
 							  <tbody>
+
 							    <tr>
 							      <td>201</td>
 							      <td>900 <span className="f10">SAR</span></td>
 							    </tr>
-							    <tr  className="text-blue">
-							      <td>309</td>
-							      <td>
-								      <ul className="list-inline mb-0">
-								      	<li className="list-inline-item mr-0">500 <span className="f10">SAR</span></li>
-								      	<li className="list-inline-item float-right"><span><IconTracker /></span></li>
-								      </ul>
-							      </td>
-							    </tr>
-							    <tr>
-							      <td>483</td>
-							      <td>1200 <span className="f10">SAR</span></td>
-							    </tr>
+							   
+							    
 							  </tbody>
 							  <tfoot>
 							    <tr>
 								    <th className="font-weight-bold bg-tab-bottom">Total</th>
-								    <th className="font-weight-bold bg-tab-bottom">2500 SAR</th>
+								    <th className="font-weight-bold bg-tab-bottom">{this.state.total_balance} SAR</th>
 							  </tr></tfoot>
 							</table>
 									</Col>									
@@ -391,7 +415,7 @@ constructor(props) {
 										  <tfoot>
 										    <tr>
 											    <th className="font-weight-bold bg-tab-bottom">Total</th>
-											    <th className="font-weight-bold bg-tab-bottom">2500 SAR</th>
+											    <th className="font-weight-bold bg-tab-bottom">{this.state.pending_total_balance} SAR</th>
 										  </tr></tfoot>
 										</table>
 									</Col>
