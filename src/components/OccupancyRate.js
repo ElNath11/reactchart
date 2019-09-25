@@ -7,10 +7,8 @@ class ChartRoomMissused extends Component{
 	constructor(props){
 		super(props);
 
-    
-
+  
 		this.state = {
-
      optionsRadial: {
         plotOptions: {
           radialBar: {

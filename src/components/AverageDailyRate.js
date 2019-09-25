@@ -10,6 +10,7 @@ class AverageDailyRate extends Component{
         
         super(props);
         this.state = {
+          
           options: {
             colors: ['#A4DC72', '#FFBD58', '#A3A0FB'],
             chart: {
@@ -36,7 +37,7 @@ class AverageDailyRate extends Component{
                 stops: [0, 100, 100, 100]
               }
             },
-            labels: [80,20] ,
+            labels: this.props.dataLab,
             markers: {
               size: 2
             },
@@ -76,37 +77,13 @@ class AverageDailyRate extends Component{
             name: 'Average Daily Rate',
             type: 'line',
             data: this.props.seriesAverage
-          }],
-          jumlah: this.props.dataLabels.length,
+          }],        
 
         }
       }
 
-  componentDidUpdate(props, state, snapshot) {
-    if (this.props.dataLabels !== props.dataLabels) {
-      this.setState({labels: this.props.dataLabels});
-    }
-  }
-   componentDidMount() {
-      const valLabels = this.props.dataLabels;
-      this.setState({labels: valLabels});
-  }
-/*labelEach(){
-    var a = "";
-    var jml = this.props.dataLabels.length;
-    for (var i = 0; i < jml; i++) {
-        a = a + "'" + this.props.dataLabels[i] + "',";
-    } 
-    
-    return a;
-  }  
-
-  console.log(labelEach());*/
-
 	render(){
-    console.log('kresnata2222', this.props.dataLabels.length);
-    console.log('bimooo', this.props.dataLabels);
-    console.log('anikeee', this.state.options.labels);
+    console.log('kresnata2222', this.props.dataLab);    
 		return(
 			<React.Fragment>
 						<Row className="text-center">

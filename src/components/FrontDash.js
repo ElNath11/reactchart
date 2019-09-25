@@ -15,6 +15,8 @@ import ChartCampaignAndSales from './ChartCampaignAndSales'
 import ChartPowerConsumption from './ChartPowerConsumption'
 import ChartSecurityAlarm from './ChartSecurityAlarm'
 
+import ChartMix from './ChartMix'
+
 //Icon
 import IconOccupied from './icons/IconOccupied'
 import IconAvailable from './icons/IconAvailable'
@@ -38,6 +40,7 @@ constructor(props) {
    	room_performance_sumary: [],
    	transaction_sumary: [],
    	payment_tracker_sumary: [],
+   	payment_trackers: [],
 
    	total_room: 0,
    	occupancy_rate: 0,
@@ -46,7 +49,7 @@ constructor(props) {
    	total_revenue: 0,
    	filterFront: 'year',
    	rate: '',
-   	labels: [],
+   	labels: '',
    	revenue: [],
     room_occupancy_rate: [],
     room_average_daily_rate: [],
@@ -77,13 +80,12 @@ constructor(props) {
 
   componentDidMount() {       
         this.fetchHotelPerformance(this.state.filterFront);
-        /*this.fetchRoomPerformance();*/
-        
+        /*this.fetchRoomPerformance();*/        
     }
 
     fetchHotelPerformance(filter){
     	
-    	console.log('bimo', filter);
+    	
     	fetch(`http://feeback.dev.ms.taskyinn.com/dashboard/frontdesk/10/${filter}`)
 
         .then(res => res.json())
@@ -94,7 +96,7 @@ constructor(props) {
           average_daily_rate: response.data.hotel_performance_sumary.average_daily_rate,
 
           room_performance_sumary: response.data.room_performance_sumary,
-          labels: response.data.room_performance_sumary.labels,
+          labels: JSON.stringify(response.data.room_performance_sumary.labels),
           revenue: response.data.room_performance_sumary.revenue,
           room_occupancy_rate: response.data.room_performance_sumary.occupancy_rate,
           room_average_daily_rate: response.data.room_performance_sumary.average_daily_rate,
@@ -124,7 +126,7 @@ constructor(props) {
 			pending_total_balance: response.data.pending_folio_sumary.total_balance,
 
           isLoaded: false
-        }) )
+        }))
         .catch(error => console.log('parsing failed', error))
     }   
     
@@ -142,29 +144,62 @@ constructor(props) {
     console.log('new filter ',this.state.filterFront);
   }
 
+  renderListPay(){
+		return this.state.payment_tracker_sumary.payment_trackers && this.state.payment_tracker_sumary.payment_trackers.map(pay_item => {
+			return(
+				
+				    <tr key={pay_item.number}>
+						<td>{pay_item.number}</td>
+						<td>{pay_item.balance} <span className="f10">SAR</span></td>
+					</tr>
+				
+			);
+		});
+	}
 
+	 renderListLabel(){
+		return this.state.room_performance_sumary.labels && this.state.room_performance_sumary.labels.map(label => {
+			return(
+				{label}				
+			);
+		});
+	}
+
+	renderPendingFolio(){
+		return this.state.pending_folio_sumary.pending_folios && this.state.pending_folio_sumary.pending_folios.map(pending_item => {
+			return(
+				
+				    <tr key={pending_item.number}>
+						<td>{pending_item.number}</td>
+						<td>{pending_item.balance} <span className="f10">SAR</span></td>
+					</tr>
+				
+			);
+		});
+	}
 
 	render(){
-		const {room_performance_sumary, hotel_performance_sumary, booking_sumary, transaction_sumary } = this.state;
-		console.log('room', this.state.confirmed);
-		console.log('DAILY LABEL', this.state.labels[0]);
-		console.log('REVENUE', this.state.revenue);
-		console.log('OCC', this.state.room_occupancy_rate);
-		console.log('AVG', this.state.room_number);
 
-		const labelsData = this.state.labels;
-    	// Converting JS array to JSON string
-    	// const jsonDataLabel = JSON.stringify(labelsData);
-    	// console.log('asa', jsonDataLabel)
+		const {room_performance_sumary, hotel_performance_sumary, booking_sumary, transaction_sumary, payment_tracker_sumary } = this.state;
+		console.log('labels', this.state.labels);
+		console.log('revenue', this.state.revenue);
+		console.log('revenue', this.state.room_average_daily_rate);
+		console.log('revenue', this.state.room_occupancy_rate);
+
+		const labelsData = JSON.stringify(this.state.labels);
+		var pushLabel = [];
+		for(var i in labelsData.length) {
+            pushLabel.push(
+                labelsData[i].name
+            );
+            console.log('oioioi', pushLabel);
+		}
 
 		return(
 			<div className="pb-2 px-3 pt-3">
 				<div className="dash-title">Dashboard</div>
 					<div className="container-background py-3 px-3 my-2">
-						<Row>
-							<Col className="section-title ">
-								Front Desk
-							</Col>
+						<Row>							
 							<Col className="text-right">				                  
 				                	<select className="dropdown" id="desk" onChange={(e) => this.OnClickFilterFront(e.target.value, "filterFront")}>
 				                        <option value="" defaultValue>Select Filter</option>
@@ -187,11 +222,19 @@ constructor(props) {
 								</div>
 								 
 								<Row className="p-2">
-									<Col xs="12">									
-										<AverageDailyRate dataLabels={this.state.labels} 
-										seriesRevenue={[0,5,5,5,1,5,0,0,0,0,0,7]} 
-										seriesOccu={[0,3,5,2,1,5,8,0,0,4,0,7]}
-										seriesAverage={[0,5,2,5,1,5,0,0,3,0,9,7]} />
+									<Col xs="12">
+										
+										
+										/*<ChartMix mixLabels={this.state.labels}/>*/
+
+										<AverageDailyRate dataLab={labelsData} 
+										seriesRevenue={this.state.revenue} 
+										seriesOccu={this.state.room_occupancy_rate}
+										seriesAverage={this.state.room_average_daily_rate} />
+
+										test saja <br />
+										{[this.state.labels]}
+
 									</Col>									
 								</Row>
 								</div>
@@ -358,13 +401,7 @@ constructor(props) {
 							    </tr>
 							  </thead>
 							  <tbody>
-
-							    <tr>
-							      <td>201</td>
-							      <td>900 <span className="f10">SAR</span></td>
-							    </tr>
-							   
-							    
+								    { this.renderListPay() }								    
 							  </tbody>
 							  <tfoot>
 							    <tr>
@@ -394,23 +431,7 @@ constructor(props) {
 										    </tr>
 										  </thead>
 										  <tbody>
-										    <tr>
-										      <td>201</td>
-										      <td>900 <span className="f10">SAR</span></td>
-										    </tr>
-										    <tr className="text-blue">
-										      <td>309</td>
-										      <td>
-											      <ul className="list-inline mb-0">
-											      	<li className="list-inline-item mr-0">500 <span className="f10">SAR</span></li>
-											      	<li className="list-inline-item float-right"><span><IconTracker /></span></li>
-											      </ul>
-										      </td>
-										    </tr>
-										    <tr>
-										      <td>483</td>
-										      <td>1200 <span className="f10">SAR</span></td>
-										    </tr>
+										   	{this.renderPendingFolio()}
 										  </tbody>
 										  <tfoot>
 										    <tr>

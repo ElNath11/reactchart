@@ -2,10 +2,7 @@ import React, {Component} from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import ChartFrontDesk from './ChartFrontDesk';
 import ChartReservation from './ChartReservation';
-import OptionFull from './OptionFull';
 import ChartCurrentCustomer from './ChartCurrentCustomer';
-import ChartRepeatOrder from './ChartRepeatOrder';
-import ChartRoomMissused from './ChartRoomMissused';
 import ChartCampaign from './ChartCampaign';
 
 class Dashboard extends Component{
@@ -193,8 +190,7 @@ class Dashboard extends Component{
 											<Col className=" text-right">View Detail</Col>
 										</Row>
 										<Row className="pt-3">
-											<Col className="">
-												<OptionFull />
+											<Col className="">												
 											</Col>											
 										</Row>
 									</div>
@@ -225,7 +221,7 @@ class Dashboard extends Component{
 									</div>
 								</Col>
 								<Col>
-									<ChartRepeatOrder />
+									
 								</Col>
 							</Row>
 						</Container>
@@ -256,8 +252,7 @@ class Dashboard extends Component{
 											<Col className=" text-right">View Detail</Col>
 										</Row>
 										<Row className="pt-3">
-											<Col className="">
-												<ChartRoomMissused />
+											<Col className="">												
 											</Col>
 										</Row>
 									</div>

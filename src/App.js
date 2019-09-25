@@ -1,7 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import ChartFront from './components/ChartFront'
 import ChartCancellationReason from './components/ChartCancellationReason'
 
 
@@ -20,7 +19,7 @@ render() {
       <BrowserRouter>
         <Fragment>
           <Switch>
-            <Route path="/" exact component={ChartFront} />
+            <Route path="/" exact component={FrontDash} />
             <Route path="/dashboard" exact component={Dashboard} />
             <Route path="/try" exact component={ChartCancellationReason} />            
             <Route path="/front" exact component={FrontDash} />
