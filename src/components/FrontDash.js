@@ -41,7 +41,8 @@ constructor(props) {
    	average_daily_rate: 0,
    	total_daily_rate: 0,
    	total_revenue: 0,
-   	filterFront: 'day'
+   	filterFront: 'day',
+   	rate: ''
    }
    
   }
@@ -77,6 +78,8 @@ constructor(props) {
         
         .then(response => { console.log('ini ',  response); this.setState({
           hotel_performance_sumary: response.data.hotel_performance_sumary,
+          occupancy_rate: response.data.hotel_performance_sumary.occupancy_rate,
+          average_daily_rate: response.data.hotel_performance_sumary.average_daily_rate,
           isLoaded: false
         })})
         .catch(error => console.log('parsing failed', error))
@@ -120,12 +123,12 @@ constructor(props) {
 	render(){
 		const {room_performance_sumary, hotel_performance_sumary } = this.state;
 		console.log('room', room_performance_sumary);
-		console.log('hotel', hotel_performance_sumary);
-		console.log('STATE', this.state);
+		console.log('rate', hotel_performance_sumary.occupancy_rate);
+		console.log('STATE', this.state);		
+
 		return(
 			<div className="pb-2 px-3 pt-3">
 				<div className="dash-title">Dashboard</div>
-
 					<div className="container-background py-3 px-3 my-2">
 						<Row>
 							<Col className="section-title ">
@@ -171,11 +174,10 @@ constructor(props) {
 													
 								<Row className="p-2 text-center">
 									<Col xs="12" sm="4">
-									
-									
-									<OccupancyRate dataOccupancy={[hotel_performance_sumary.occupancy_rate]} />
+									{}
+									<OccupancyRate dataOccupancy={[this.state.occupancy_rate]} />
 									</Col>
-									<Col xs="12" sm="4"><AverageDailyRateCircular dataAverage={[50]} /></Col>
+									<Col xs="12" sm="4"><AverageDailyRateCircular dataAverage={[this.state.average_daily_rate]} /></Col>
 									<Col xs="12" sm="4"><TotalRevenue /></Col>
 								</Row>
 								<Row className="p-2 text-center">
@@ -407,7 +409,7 @@ constructor(props) {
 							</Col>
 							<Col className="text-right">
 								<select className="dropdown" id="booking">
-				                        <option value="" selected="selected">Select Filter</option>
+				                        <option value="" defaultValue>Select Filter</option>
 				                        <option value="today">Today</option>
 				                        <option value="monthly">Monthly</option>
 				                        <option value="years">Years</option>
@@ -463,7 +465,7 @@ constructor(props) {
 							</Col>
 							<Col className="text-right">
 								<select className="dropdown" id="guest">
-				                        <option value="" selected="selected">Select Filter</option>
+				                        <option value="" defaultValue>Select Filter</option>
 				                        <option value="today">Today</option>
 				                        <option value="monthly">Monthly</option>
 				                        <option value="years">Years</option>
@@ -583,7 +585,7 @@ constructor(props) {
 							</Col>
 							<Col className="text-right">
 								<select className="dropdown" id="report">
-				                        <option value="" selected="selected">Select Filter</option>
+				                        <option value="" defaultValue>Select Filter</option>
 				                        <option value="today">Today</option>
 				                        <option value="monthly">Monthly</option>
 				                        <option value="years">Years</option>
