@@ -30,7 +30,7 @@ class TotalRevenue extends Component{
             },
             track: {
               background: '#fff',
-              strokeWidth: '70%',
+              strokeWidth: '90%',
               margin: 0, // margin is in pixels
               dropShadow: {
                 enabled: true,

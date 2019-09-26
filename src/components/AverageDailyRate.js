@@ -14,10 +14,14 @@ class AverageDailyRate extends Component{
           seriesRevenue: this.props.seriesRevenue,  
 
           options: {
+           
             colors: ['#A4DC72', '#FFBD58', '#A3A0FB'],
             chart: {
               stacked: false,
             },
+             toolbar: {
+            show: false 
+          },
             stroke: {
               width: [0, 2, 5],
               curve: 'smooth'
@@ -41,7 +45,7 @@ class AverageDailyRate extends Component{
             },
             labels: this.props.dataLab,
             markers: {
-              size: 2
+              size: 4
             },
             xaxis: {
               type: 'text'
@@ -58,7 +62,7 @@ class AverageDailyRate extends Component{
               y: {
                 formatter: function (y) {
                   if (typeof y !== "undefined") {
-                    return y.toFixed(0) + " points";
+                    return parseFloat(Math.round(y * 100) / 100).toFixed(0) + " points";
                   }
                   return y;
                 }
@@ -66,7 +70,6 @@ class AverageDailyRate extends Component{
             }
           },
           
-
           series: [{
             name: 'Revenue (per Room Type)',
             type: 'column',
@@ -84,9 +87,7 @@ class AverageDailyRate extends Component{
         }
       }
 
-	render(){
-    console.log('PROPS revenue', this.props.revenue);
-    console.log('STATE revenue', this.state.revenue);
+	render(){    
 
     const seriesRevenue = this.props.revenue;
     const seriesOccu = this.props.seriesOccu;
@@ -110,9 +111,8 @@ class AverageDailyRate extends Component{
 		return(
 			<React.Fragment>
 						<Row className="text-center">
-							<Col xs="12" className="text-center">
-
-								<Chart options={this.state.options} series={series} type="line" height="330" />
+							<Col xs="12" className="text-center legend">
+								<Chart className="legend" options={this.state.options} series={series} type="line" height="330" />
 							</Col>              
             </Row>
 			</React.Fragment>

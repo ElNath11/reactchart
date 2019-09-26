@@ -37,7 +37,7 @@ class ChartCancellationReason extends React.Component {
                 show: true,
                 name: {
                   show: true,
-                  fontSize: "10px",
+                  fontSize: "14px",
                   fontFamily: undefined,
                   offsetY: 0
                 },

@@ -37,7 +37,7 @@ class ChartCurrentCustomer extends React.Component {
                 show: true,
                 name: {
                   show: true,
-                  fontSize: "12px",
+                  fontSize: "14px",
                   fontFamily: undefined,
                   offsetY: 0
                 },
@@ -68,7 +68,7 @@ class ChartCurrentCustomer extends React.Component {
                 height: 150,
                 horizontalAlign: 'left',
                 formatter: function(seriesName, opts) {
-                  return seriesName + ":  " + opts.w.globals.series[opts.seriesIndex]
+                  return seriesName + ":  " + opts.w.globals.series[opts.seriesIndex]+' SAR'
               },
           markers: {
             width: 8,

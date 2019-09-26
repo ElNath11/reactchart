@@ -23,7 +23,8 @@
   font-weight: bold;
   display: inline-block; 
   width: 1em;
-  margin-left: -1em;
+    margin-left: -1em;
+    font-size: 22px;
   font-size: 18px;
 }
 
@@ -38,7 +39,8 @@
   font-weight: bold;
   display: inline-block; 
   width: 1em;
-  margin-left: -1em;
+    margin-left: -1em;
+    font-size: 22px;
   font-size: 18px;
 }
 
@@ -48,7 +50,8 @@
   font-weight: bold;
   display: inline-block; 
   width: 1em;
-  margin-left: -1em;
+    margin-left: -1em;
+    font-size: 22px;
   font-size: 18px;
 }
 
@@ -59,7 +62,8 @@
   font-weight: bold;
   display: inline-block; 
   width: 1em;
-  margin-left: -1em;
+    margin-left: -1em;
+    font-size: 22px;
   font-size: 18px;
 }
 
@@ -127,7 +131,7 @@
 .box .box-content {
  position: absolute;
 /*   height: 100%; */
-  top: 50%;
+  top: 55%;
   transform: translateY(-50%);
   width: 100%;
 }
@@ -175,8 +179,9 @@
   color: #FFBD58;
   font-weight: bold;
   display: inline-block; 
-  width: 1em;
-  margin-left: -1em;
+ width: 1em;
+    margin-left: -1em;
+    font-size: 22px;
 }
 .purple-circle::before {
   content: "\2022";
@@ -184,7 +189,8 @@
   font-weight: bold;
   display: inline-block; 
   width: 1em;
-  margin-left: -1em;
+    margin-left: -1em;
+    font-size: 22px;
 }
 
 .green-circle::before {
@@ -193,7 +199,8 @@
   font-weight: bold;
   display: inline-block; 
   width: 1em;
-  margin-left: -1em;
+    margin-left: -1em;
+    font-size: 22px;
 }
 
 .semi-bold {
@@ -205,4 +212,11 @@
 
 .w30{
   width: 33.333333%;
+}
+.apexcharts-toolbar {
+  display: none;
+}
+
+.legend > .apexcharts-legend {
+  padding-top: 3rem;
 }

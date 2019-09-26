@@ -44,7 +44,7 @@ constructor(props) {
    	average_daily_rate: 0,
    	total_daily_rate: 0,
    	total_revenue: 0,
-   	filterFront: 'year',
+   	filterFront: 'day',
    	rate: '',
 	labels: [],
    	revenue: [],
@@ -233,11 +233,14 @@ constructor(props) {
 													
 								<Row className="p-2 text-center">
 									<Col xs="12" sm="4">
-									
-									<OccupancyRate dataOccupancy={[this.state.occupancy_rate]} />
+										<OccupancyRate dataOccupancy={[this.state.occupancy_rate]} />
 									</Col>
-									<Col xs="12" sm="4"><AverageDailyRateCircular dataAverage={[this.state.average_daily_rate]} /></Col>
-									<Col xs="12" sm="4"><TotalRevenue /></Col>
+									<Col xs="12" sm="4">
+										<AverageDailyRateCircular dataAverage={[this.state.average_daily_rate]} />
+									</Col>
+									<Col xs="12" sm="4">
+										<TotalRevenue />
+									</Col>
 								</Row>
 								<Row className="p-2 text-center">
 									<Col xs="12" sm="4">
@@ -276,7 +279,7 @@ constructor(props) {
 										<Col xs="12" sm="6" className="text-detail">Details ></Col>
 									</Row>
 								</div>
-								<Row className="p-2 text-center mt-2">
+								<Row className="p-2 text-center mt-3">
 									<Col>
 										<ul className="list-unstyled">
 											<li><IconConfirmed /></li>
@@ -322,7 +325,7 @@ constructor(props) {
 										<Col xs="12" sm="6" className="text-detail">Details ></Col>
 									</Row>
 								</div>								
-								<Row className="p-2 text-center mt-2">
+								<Row className="p-2 text-center mt-3">
 									<Col>
 										<ul className="list-unstyled">
 											<li><IconOccupied /></li>
@@ -562,8 +565,8 @@ constructor(props) {
 															<li className="text-detail-value f12">Who Rated</li>
 														</ul>
 													</td>
-													<td>
-														<ul className="list-unstyled w30">
+													<td className=" w30">
+														<ul className="list-unstyled">
 															<li className="text-number f14">8</li>
 															<li className="text-detail-value f12">Out of 10</li>
 														</ul>
@@ -649,13 +652,13 @@ constructor(props) {
 										<Row>
 											<Col>
 												<ul className="list-unstyled">
-													<li className="text-number f14">500</li>
+													<li className="text-number f18">500</li>
 													<li className="text-detail-value f12">Hours Usage</li>
 												</ul>
 											</Col>
 											<Col>
 												<ul className="list-unstyled">
-													<li className="text-number f14 text-red">5,589.5</li>
+													<li className="text-number f18 text-red">5,589.5</li>
 													<li className="text-detail-value f12">Loss (in SAR)</li>
 												</ul>
 											</Col>
@@ -667,7 +670,7 @@ constructor(props) {
 										<Row>
 											<Col>
 												<ul className="list-unstyled">
-													<li className="text-number f14">15</li>
+													<li className="text-number f18">15</li>
 													<li className="text-detail-value f12">Rooms Detected</li>
 												</ul>
 											</Col>

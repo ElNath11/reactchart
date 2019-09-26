@@ -85,7 +85,7 @@ class ChartRoomMissused extends Component{
 						<Row className="text-center">
 							<Col xs="12" className="text-center">
               <h2 className="text-detail-value f14 orange-circle mb-0 pt-3">Occupancy Rate</h2>
-								<Chart options={this.state.optionsRadial} series={this.props.dataOccupancy} type="radialBar" width="100%" height="276px"/>
+								<Chart options={this.state.optionsRadial} series={this.props.dataOccupancy} type="radialBar" width="100%" height="272px"/>
 							</Col>              
 						</Row>            
 			</React.Fragment>
