@@ -15,8 +15,6 @@ import ChartCampaignAndSales from './ChartCampaignAndSales'
 import ChartPowerConsumption from './ChartPowerConsumption'
 import ChartSecurityAlarm from './ChartSecurityAlarm'
 
-import ChartMix from './ChartMix'
-
 //Icon
 import IconOccupied from './icons/IconOccupied'
 import IconAvailable from './icons/IconAvailable'
@@ -27,7 +25,6 @@ import IconConfirmed from './icons/IconConfirmed'
 import IconUnconfirmed from './icons/IconUnconfirmed'
 import IconNoShow from './icons/IconNoShow'
 import IconCancel from './icons/IconCancel'
-import IconTracker from './icons/IconTracker'
 
 
 class FrontDash extends Component {
@@ -35,7 +32,7 @@ constructor(props) {
     super(props);
 
    this.state = {   	
-   	itemsPerformance: [],
+   	data: [],
    	hotel_performance_sumary: [],
    	room_performance_sumary: [],
    	transaction_sumary: [],
@@ -49,7 +46,7 @@ constructor(props) {
    	total_revenue: 0,
    	filterFront: 'year',
    	rate: '',
-   	labels: '',
+	labels: [],
    	revenue: [],
     room_occupancy_rate: [],
     room_average_daily_rate: [],
@@ -79,24 +76,27 @@ constructor(props) {
   }
 
   componentDidMount() {       
-        this.fetchHotelPerformance(this.state.filterFront);
-        /*this.fetchRoomPerformance();*/        
+	this.fetchHotelPerformance(this.state.filterFront);
+        /*this.fetchRoomPerformance();*/
     }
 
-    fetchHotelPerformance(filter){
-    	
-    	
-    	fetch(`http://feeback.dev.ms.taskyinn.com/dashboard/frontdesk/10/${filter}`)
+    fetchHotelPerformance = (filter) => {
+		
+		fetch(`http://feeback.dev.ms.taskyinn.com/dashboard/frontdesk/10/${filter}`, {
+			crossDomain:true,
+			method: 'GET'
+		})
 
         .then(res => res.json())
         
         .then(response => this.setState({
+        	data: response.data,
           hotel_performance_sumary: response.data.hotel_performance_sumary,
           occupancy_rate: response.data.hotel_performance_sumary.occupancy_rate,
           average_daily_rate: response.data.hotel_performance_sumary.average_daily_rate,
 
           room_performance_sumary: response.data.room_performance_sumary,
-          labels: JSON.stringify(response.data.room_performance_sumary.labels),
+          labels: response.data.room_performance_sumary.labels,
           revenue: response.data.room_performance_sumary.revenue,
           room_occupancy_rate: response.data.room_performance_sumary.occupancy_rate,
           room_average_daily_rate: response.data.room_performance_sumary.average_daily_rate,
@@ -125,26 +125,18 @@ constructor(props) {
 			pending_amout_requested: response.data.pending_folio_sumary.amout_requested,
 			pending_total_balance: response.data.pending_folio_sumary.total_balance,
 
-          isLoaded: false
-        }))
-        .catch(error => console.log('parsing failed', error))
-    }   
+		  isLoaded: true
+		}),
+			//this.okay()
+		).catch(error => console.log('parsing failed', error))
+	}
     
-     OnClickFilterFront = (value, filterFront) => {
+    OnClickFilterFront = (value, filterFront) => {
     	this.setState({ filterFront: value });
-    	this.fetchHotelPerformance(value);
-    	
-  	};
+		this.fetchHotelPerformance(value);
+	};
 
- handleChangeDesk = (e) => {
-    console.log('Selected value:', e.target.value);
-    this.setState({
-      filterFront: e.target.value,
-    })
-    console.log('new filter ',this.state.filterFront);
-  }
-
-  renderListPay(){
+    renderListPay(){
 		return this.state.payment_tracker_sumary.payment_trackers && this.state.payment_tracker_sumary.payment_trackers.map(pay_item => {
 			return(
 				
@@ -153,14 +145,6 @@ constructor(props) {
 						<td>{pay_item.balance} <span className="f10">SAR</span></td>
 					</tr>
 				
-			);
-		});
-	}
-
-	 renderListLabel(){
-		return this.state.room_performance_sumary.labels && this.state.room_performance_sumary.labels.map(label => {
-			return(
-				{label}				
 			);
 		});
 	}
@@ -178,22 +162,26 @@ constructor(props) {
 		});
 	}
 
+	// componentDidUpdate(prevProps, prevState, snapshot, room_performance_sumary) {
+	//   //Typical usage (don't forget to compare props):
+	//   if (this.state.room_performance_sumary !== prevState.room_performance_sumary) {
+	//      this.setState(this.state.room_performance_sumary);
+	//   }
+	// }
+
 	render(){
 
-		const {room_performance_sumary, hotel_performance_sumary, booking_sumary, transaction_sumary, payment_tracker_sumary } = this.state;
-		console.log('labels', this.state.labels);
-		console.log('revenue', this.state.revenue);
-		console.log('revenue', this.state.room_average_daily_rate);
-		console.log('revenue', this.state.room_occupancy_rate);
+		const {hotel_performance_sumary, room_performance_sumary,error, isLoaded} = this.state;
+		
+		if (!room_performance_sumary) { return <div>Loading rev...</div>; }
 
-		const labelsData = JSON.stringify(this.state.labels);
-		var pushLabel = [];
-		for(var i in labelsData.length) {
-            pushLabel.push(
-                labelsData[i].name
-            );
-            console.log('oioioi', pushLabel);
-		}
+		if (error) {
+			return <div>Error: {error.message}</div>;
+
+		} else if (!isLoaded) {
+			return <div></div>;
+
+		} else {	
 
 		return(
 			<div className="pb-2 px-3 pt-3">
@@ -216,24 +204,18 @@ constructor(props) {
 								<div className="theBox">
 								<div className="theBox-head">
 									<Row className="p-2">
-										<Col xs="12" sm="6" className="text-left">Room Performance</Col>
+										<Col xs="12" sm="6" className="text-left semi-bold">Room Performance</Col>
 										<Col xs="12" sm="6" className="text-detail">Details ></Col>
 									</Row>
 								</div>
 								 
 								<Row className="p-2">
 									<Col xs="12">
-										
-										
-										/*<ChartMix mixLabels={this.state.labels}/>*/
 
-										<AverageDailyRate dataLab={labelsData} 
+										<AverageDailyRate dataLab={this.state.labels}
 										seriesRevenue={this.state.revenue} 
 										seriesOccu={this.state.room_occupancy_rate}
 										seriesAverage={this.state.room_average_daily_rate} />
-
-										test saja <br />
-										{[this.state.labels]}
 
 									</Col>									
 								</Row>
@@ -244,7 +226,7 @@ constructor(props) {
 								<div className="theBox">
 								<div className="theBox-head">
 									<Row className="p-2">
-										<Col xs="12" sm="6" className="text-left">Hotel Performance</Col>
+										<Col xs="12" sm="6" className="text-left semi-bold">Hotel Performance</Col>
 										<Col xs="12" sm="6" className="text-detail">Details ></Col>
 									</Row>
 								</div>
@@ -290,11 +272,11 @@ constructor(props) {
 								<div className="theBox">
 								<div className="theBox-head">
 									<Row className="p-2">
-										<Col xs="12" sm="6" className="text-left">Booking Status</Col>
+										<Col xs="12" sm="6" className="text-left semi-bold">Booking Status</Col>
 										<Col xs="12" sm="6" className="text-detail">Details ></Col>
 									</Row>
 								</div>
-								<Row className="p-2 text-center">
+								<Row className="p-2 text-center mt-2">
 									<Col>
 										<ul className="list-unstyled">
 											<li><IconConfirmed /></li>
@@ -336,11 +318,11 @@ constructor(props) {
 								<div className="theBox">
 								<div className="theBox-head">
 									<Row className="p-2">
-										<Col xs="12" sm="6" className="text-left">Transaction (in Room)</Col>
+										<Col xs="12" sm="6" className="text-left semi-bold">Transaction (in Room)</Col>
 										<Col xs="12" sm="6" className="text-detail">Details ></Col>
 									</Row>
 								</div>								
-								<Row className="p-2 text-center">
+								<Row className="p-2 text-center mt-2">
 									<Col>
 										<ul className="list-unstyled">
 											<li><IconOccupied /></li>
@@ -387,7 +369,7 @@ constructor(props) {
 								<div className="theBox">
 								<div className="theBox-head">
 									<Row className="p-2">
-										<Col xs="12" sm="6" className="text-left">Payment Tracker</Col>
+										<Col xs="12" sm="6" className="text-left semi-bold">Payment Tracker</Col>
 										<Col xs="12" sm="6" className="text-detail">Details ></Col>
 									</Row>
 								</div>
@@ -417,7 +399,7 @@ constructor(props) {
 								<div className="theBox">
 								<div className="theBox-head">
 									<Row className="p-2">
-										<Col xs="12" sm="6" className="text-left">Pending Folio</Col>
+										<Col xs="12" sm="6" className="text-left semi-bold">Pending Folio</Col>
 										<Col xs="12" sm="6" className="text-detail">Details ></Col>
 									</Row>
 								</div>								
@@ -467,12 +449,12 @@ constructor(props) {
 								<div className="theBox">
 								<div className="theBox-head">
 									<Row className="p-2">
-										<Col xs="12" sm="6" className="text-left">Reservation Source</Col>
+										<Col xs="12" sm="6" className="text-left semi-bold">Reservation Source</Col>
 										<Col xs="12" sm="6" className="text-detail">Details ></Col>
 									</Row>
 								</div>
 								<Row className="p-2">
-									<Col xs="12 text-left">
+									<Col xs="12" className="pt-3">
 										<ChartReservationSource />
 									</Col>
 								</Row>
@@ -482,7 +464,7 @@ constructor(props) {
 								<div className="theBox">
 								<div className="theBox-head">
 									<Row className="p-2">
-										<Col xs="12" sm="6" className="text-left">Cancelation Rate</Col>
+										<Col xs="12" sm="6" className="text-left semi-bold">Cancelation Rate</Col>
 										<Col xs="12" sm="6" className="text-detail">Details ></Col>
 									</Row>
 								</div>
@@ -523,7 +505,7 @@ constructor(props) {
 								<div className="theBox">
 								<div className="theBox-head">
 									<Row className="p-2">
-										<Col xs="12" sm="6" className="text-left">Guest Segment</Col>
+										<Col xs="12" sm="6" className="text-left semi-bold">Guest Segment</Col>
 										<Col xs="12" sm="6" className="text-detail">Details ></Col>
 									</Row>
 								</div>
@@ -548,7 +530,7 @@ constructor(props) {
 								<div className="theBox">
 								<div className="theBox-head">
 									<Row className="p-2">
-										<Col xs="12" sm="6" className="text-left">Guest Feedback</Col>
+										<Col xs="12" sm="6" className="text-left semi-bold">Guest Feedback</Col>
 										<Col xs="12" sm="6" className="text-detail">Details ></Col>
 									</Row>
 								</div>
@@ -563,25 +545,25 @@ constructor(props) {
 											<thead className="theBox-head">
 												<tr className="border-bottom">
 													<td colSpan="2" className="border-right">Respondents</td>
-													<td>Average Rating</td>
+													<td className="w127">Average Rating</td>
 												</tr>
 											</thead>
 											<tbody>
 												<tr>
-													<td className="border-right">
+													<td className="border-right w30">
 														<ul className="list-unstyled">
 															<li className="text-number f14">375</li>
 															<li className="text-detail-value f12">Forms Sent</li>
 														</ul>
 													</td>
-													<td className="border-right">
+													<td className="border-right w30">
 														<ul className="list-unstyled">
 															<li className="text-number f14">347</li>
 															<li className="text-detail-value f12">Who Rated</li>
 														</ul>
 													</td>
 													<td>
-														<ul className="list-unstyled">
+														<ul className="list-unstyled w30">
 															<li className="text-number f14">8</li>
 															<li className="text-detail-value f12">Out of 10</li>
 														</ul>
@@ -592,19 +574,19 @@ constructor(props) {
 										<table className="theBox w90">
 										<tbody>
 											<tr>
-												<td className="border-right">
+												<td className="border-right w30">
 													<ul className="list-unstyled">
 															<li className="text-number f14">260</li>
 															<li className="text-detail-value f12 green-circle">Vote Yes</li>
 													</ul>
 												</td>
-												<td className="border-right">
+												<td className="border-right w30">
 													<ul className="list-unstyled">
 															<li className="text-number f14">87</li>
 															<li className="text-detail-value f12 red-circle">Vote No</li>
 														</ul>
 												</td>
-												<td className=" ">
+												<td className="w30">
 													<ul className="list-unstyled">
 															<li className="text-number f14">347</li>
 															<li className="text-detail-value f12">Total Vote</li>
@@ -643,7 +625,7 @@ constructor(props) {
 								<div className="theBox">
 								<div className="theBox-head">
 									<Row className="p-2">
-										<Col xs="12" sm="6" className="text-left">Sales Perfomance</Col>
+										<Col xs="12" sm="6" className="text-left semi-bold">Sales Perfomance</Col>
 										<Col xs="12" sm="6" className="text-detail">Details ></Col>
 									</Row>
 								</div>
@@ -656,7 +638,7 @@ constructor(props) {
 								<div className="theBox">
 								<div className="theBox-head">
 									<Row className="p-2">
-										<Col xs="12" sm="6" className="text-left">Room Tracking</Col>
+										<Col xs="12" sm="6" className="text-left semi-bold">Room Tracking</Col>
 										<Col xs="12" sm="6" className="text-detail">Details ></Col>
 									</Row>
 								</div>
@@ -701,6 +683,7 @@ constructor(props) {
 			</div>
 		);
 	}
+}
 }
 
 export default FrontDash;

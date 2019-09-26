@@ -6,11 +6,13 @@ import Chart from 'react-apexcharts';
 class AverageDailyRate extends Component{
  
 
+
 	constructor(props) {
         
         super(props);
         this.state = {
-          
+          seriesRevenue: this.props.seriesRevenue,  
+
           options: {
             colors: ['#A4DC72', '#FFBD58', '#A3A0FB'],
             chart: {
@@ -68,6 +70,32 @@ class AverageDailyRate extends Component{
           series: [{
             name: 'Revenue (per Room Type)',
             type: 'column',
+            data: props.seriesRevenue
+          }, {
+            name: 'Occupancy Rate',
+            type: 'area',
+            data: props.seriesOccu
+          }, {
+            name: 'Average Daily Rate',
+            type: 'line',
+            data: props.seriesAverage
+          }],      
+
+        }
+      }
+
+	render(){
+    console.log('PROPS revenue', this.props.revenue);
+    console.log('STATE revenue', this.state.revenue);
+
+    const seriesRevenue = this.props.revenue;
+    const seriesOccu = this.props.seriesOccu;
+    const seriesAverage = this.props.seriesAverage;
+
+    const series = 
+           [{
+            name: 'Revenue (per Room Type)',
+            type: 'column',
             data: this.props.seriesRevenue
           }, {
             name: 'Occupancy Rate',
@@ -77,19 +105,14 @@ class AverageDailyRate extends Component{
             name: 'Average Daily Rate',
             type: 'line',
             data: this.props.seriesAverage
-          }],        
+          }];
 
-        }
-      }
-
-	render(){
-    console.log('kresnata2222', this.props.dataLab);    
 		return(
 			<React.Fragment>
 						<Row className="text-center">
 							<Col xs="12" className="text-center">
 
-								<Chart options={this.state.options} series={this.state.series} type="line" height="330" />
+								<Chart options={this.state.options} series={series} type="line" height="330" />
 							</Col>              
             </Row>
 			</React.Fragment>

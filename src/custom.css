@@ -195,3 +195,14 @@
   width: 1em;
   margin-left: -1em;
 }
+
+.semi-bold {
+  font-weight: 600;
+}
+.w127 {
+  width: 127px;
+}
+
+.w30{
+  width: 33.333333%;
+}
